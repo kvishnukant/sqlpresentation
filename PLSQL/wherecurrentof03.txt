@@ -1,0 +1,24 @@
+
+
+
+
+Create a PL/SQL block to promote clerks who earn more than 3,000 to SR. CLERK and increase their salary by 10%. Use the EMP table for this practice. Verify the results by querying on the EMP table.
+Hint: Use a cursor with FOR UPDATE and CURRENT OF syntax.
+
+
+DECLARE
+	CURSOR C_Senior_Clerk IS
+	SELECT employee_id,job_id FROM emp
+	WHERE job_id = 'ST_CLERK' AND salary > 3000
+	FOR UPDATE OF job_id;
+BEGIN
+	FOR V_Emrec IN C_Senior_Clerk 
+	LOOP
+		UPDATE emp
+		SET job_id = 'ST_CLERK',
+		salary = 1.1 * salary
+		WHERE CURRENT OF C_Senior_Clerk;
+	END LOOP;
+	COMMIT;
+END;
+

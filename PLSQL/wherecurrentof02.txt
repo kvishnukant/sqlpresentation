@@ -1,0 +1,25 @@
+Write a PL/SQL block to declare a variable called v_salary to store the salary of an employee. In the executable part of the program, do the following:
+Store his or her salary in the v_salary variable
+If the salary is less than 3,000, give the employee a raise of 500 and display the message '<Employee Name>’s salary updated' in the window.
+If the salary is more than 3,000, print the employee’s salary in the format, '<Employee Name> earns …...………'
+Test the PL/SQL for the last names
+   
+  DECLARE
+   V_SALARY NUMBER(7,2);
+   V_LASTNAME EMPLOYEES.LAST_NAME%TYPE;
+   BEGIN
+   SELECT salary INTO V_SALARY
+   FROM employees 
+  WHERE last_name = INITCAP('&&P_LASTNAME') FOR UPDATE of salary;	
+  V_LASTNAME := INITCAP('&P_LASTNAME');
+	IF V_SALARY < 3000 THEN
+		UPDATE employees SET salary = salary + 500
+		WHERE last_name =  INITCAP('&P_LASTNAME') ;
+		DBMS_OUTPUT.PUT_LINE (V_LASTNAME || '''s salary updated');
+	ELSE
+		DBMS_OUTPUT.PUT_LINE (V_LASTNAME  || ' earns ' || 
+
+TO_CHAR(V_SALARY));
+	END IF;
+END;
+/ 
